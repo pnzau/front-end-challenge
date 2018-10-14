@@ -2,7 +2,7 @@
 
 The objective of this challenge is to build a UI page to display some github repositories.
 
-##Rules
+## Rules
 
 The page can't be static. It needs some logic to show all data dynamically.
 All repositories from data.json must be shown.
@@ -13,15 +13,16 @@ Do not ask your friends to solve the challenge for you. We may ask you to explai
 The app must be responsive and scale based on different window sizes. Using a mobile-first approach is a big plus.
 What we're looking for is a table or list of items that show some important data to the end user.
 For each item, the following information must be present on the page:
-⋅⋅* Name
-⋅⋅* Owner
-⋅⋅* Pushed At
-⋅⋅* Description
-⋅⋅* Fork Count
-⋅⋅* Star Gazers
-⋅⋅* Primary Language
+* Name
+* Owner
+* Pushed At
+* Description
+* Fork Count
+* Star Gazers
+* Primary Language
+
 It must be possible to sort based on column headers (Name, Pushed At, etc.).
-##Bonus points
+## Bonus points
 
 Easy as pie? So add more functionality by allowing to discover more data from each list item. Add some action buttons to add/delete an item from the list.
 Want more challenges? Add a filter to show only repositories written primarily in JavaScript or add a search box.

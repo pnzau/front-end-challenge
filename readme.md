@@ -9,14 +9,15 @@ What we expect to learn from you with this challenge:
 
 
 ## Your work style.
-How you think and solve problems.
-How you communicate.
+* How you think and solve problems.
+* How you communicate.
 What we expect that you learn from us:
 
 
-## How we work as a team.
-Have a close look at some of the problems we face daily.
-Next steps
+* How we work as a team.
+* Have a close look at some of the problems we face daily.
+
+## Next steps
 Fork this repository to your personal account.
 Follow the instructions in the [challenge-description file](https://github.com/ShareQube/front-end-challenge/blob/master/challenge-description.md).
 Solve the challenge in the best way you can.
