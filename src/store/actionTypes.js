@@ -5,3 +5,4 @@ export const TOGGLE_MODE = 'TOGGLE_MODE';
 export const FETCH_REPOS = 'FETCH_REPOS';
 export const UPDATE_SELECTED_REPO = 'UPDATE_SELECTED_REPO';
 export const MANAGE_REPO = 'MANAGE_REPO';
+export const UPDATE_REPO_FORM = 'UPDATE_REPO_FORM';

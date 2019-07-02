@@ -1,6 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { backgroundColor, textColor } from 'modules/shared/components/theme';
+import { daysAgo } from 'transformers';
+import { rubberBand } from 'react-animations';
+
+const rubberBandAnimation = keyframes`${rubberBand}`;
 
 export const RepoItem = (props) => {
     const { repo: { owner, name, pushedAt, forkCount, stargazers, description, isPrivate, primaryLanguage } } = props;
@@ -38,15 +42,24 @@ export const RepoItem = (props) => {
 
         .material-icons {
             font-size: 24px;
+            cursor: pointer;
+              &:hover {
+                animation: 1s ${rubberBandAnimation};
+            }
         }
     `;
     return (
         <Div className="rounded d-flex flex-column pt-2 pb-4 px-3 mb-2">
-            <p className="title text-uppercase font-weight-bold mb-0">
+            <div className="d-flex flex-row align-items-center justify-content-between">
+                <span className="title text-uppercase font-weight-bold mb-0">
+                    <strong>
+                        {name}
+                    </strong>
+                </span>
                 <strong>
-                    {name}
+                    <i className="material-icons text-blue-900 delete-btn">close</i>
                 </strong>
-            </p>
+            </div>
             <div className="d-flex flex-row align-items-center justify-content-between w-100 pt-2">
                 <div className="d-flex flex-row align-items-center">
                     <img className="img-fluid img-shape rounded-circle" src={owner.avatarUrl} />
@@ -55,7 +68,7 @@ export const RepoItem = (props) => {
                             {owner.login}
                         </p>
                         <p className="text-small text-left pt-3 mb-0 w-100 font-weight-bold">
-                            Pushed {pushedAt}
+                            Pushed {daysAgo(pushedAt)}
                         </p>
                     </div>
                 </div>
@@ -80,12 +93,12 @@ export const RepoItem = (props) => {
                     </div>
                 </div>
                 <div className="d-flex flex-row align-items-center justify-content-start pl-3">
-                    <span className="text-small text-blue-800">{stargazers.totalCount}</span>
-                    <i className="material-icons text-gold">grade</i>
+                    <span className="text-small text-900">{stargazers.totalCount}</span>
+                    <i className="material-icons text-gold" data-toggle="tooltip" data-placement="top" title="Stargazers">grade</i>
                 </div>
                 <div className="d-flex flex-row align-items-center justify-content-start pl-3">
-                    <span className="text-small text-blue-800">{forkCount}</span>
-                    <i className="material-icons text-blue-900">call_split</i>
+                    <span className="text-small text-900">{forkCount}</span>
+                    <i className="material-icons text-900" data-toggle="tooltip" data-placement="top" title="Forks">call_split</i>
                 </div>
             </div>
         </Div>);

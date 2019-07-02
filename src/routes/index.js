@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router';
+import { Route, withRouter, Switch, Redirect } from 'react-router';
 
-import { Repos } from 'modules/repositories/components';
+import { Repos, AddRepo } from 'modules/repositories/components';
 import { Layout } from 'modules/shared/components';
 
 
@@ -37,8 +37,15 @@ class Routes extends Component {
     render() {
         return (
             <Layout>
-                <Route>
-                    <Route path="/home" component={Repos} />
+                <Route
+                    render={() => (
+                        <Switch>
+                            <Route path="/home" component={Repos} />
+                            <Route path="/repos/add-repo" exact component={AddRepo} />
+                            <Redirect to="/home" />
+                        </Switch>
+                    )}
+                >
                 </Route>
             </Layout>
         )
