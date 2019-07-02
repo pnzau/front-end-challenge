@@ -29,3 +29,11 @@ export const isObject = (val) => {
     }
     return value;
 }
+
+export const omitFromObj = (val, props) => {
+    return _.omit(val, props)
+}
+
+export const makeObj = (prop, ...props) => {
+    return { [`${prop}`]: { ...props } }
+}
