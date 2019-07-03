@@ -4,11 +4,11 @@ import actions from 'store/rootActions';
 import { isEmpty } from 'transformers';
 import { RepoItem } from './repo-item';
 import styled from 'styled-components';
-import { backgroundColor } from 'modules/shared/components/theme';
+import { backgroundColor, SearchBar } from 'modules/shared/components';
 import { history } from 'helpers';
 
 const SRepos = (props) => {
-    const { repo: { repos }, fetchRepos } = props;
+    const { repo: { repos }, fetchRepos, searchRepo } = props;
 
     useEffect(() => {
         const fetchingRepos = async () => {
@@ -17,12 +17,16 @@ const SRepos = (props) => {
         if (isEmpty(repos)) {
             fetchingRepos();
         }
-    }, []);
+    }, [repos, fetchRepos]);
 
     const goToAddRepoPage = () => {
         history.push({
             pathname: '/repos/add-repo'
         });
+    }
+
+    const handleSearch = (val) => {
+        searchRepo({ searchTerm: val });
     }
 
     const Div = styled.div`
@@ -40,6 +44,7 @@ const SRepos = (props) => {
     `;
 
     return (<Div className="row">
+        <SearchBar placeholder="Search here ..." handleSearch={handleSearch} />
         <div role='button' onClick={goToAddRepoPage} className="shadow rounded-circle text-gold floating-btn position-fixed">
             <i className="material-icons p-2">
                 add

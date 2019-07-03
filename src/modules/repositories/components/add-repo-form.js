@@ -205,10 +205,12 @@ const FormikEnhancer = withFormik({
 
     handleSubmit: (payload, bag) => {
         const primaryLanguage = JSON.parse(payload.primaryLanguage);
+        const pushedAt = new Date();
         bag.props.handleSubmit({
-            ...omitFromObj(payload, ['login', 'avatarUrl', 'primaryLanguage']),
+            ...omitFromObj(payload, ['login', 'avatarUrl', 'primaryLanguage', 'pushedAt']),
             ...makeObj('owner', payload.login, payload.avatarUrl),
             primaryLanguage,
+            pushedAt,
         });
         bag.resetForm();
         bag.setSubmitting(false);

@@ -3,18 +3,34 @@ import styled, { keyframes } from 'styled-components';
 import { backgroundColor, textColor } from 'modules/shared/components/theme';
 import { daysAgo } from 'transformers';
 import { rubberBand } from 'react-animations';
+import { connect } from 'react-redux';
+import actions from 'store/rootActions';
 
 const rubberBandAnimation = keyframes`${rubberBand}`;
 
-export const RepoItem = (props) => {
-    const { repo: { owner, name, pushedAt, forkCount, stargazers, description, isPrivate, primaryLanguage } } = props;
+const SRepoItem = (props) => {
+    const { repo: {
+        owner,
+        name,
+        pushedAt,
+        forkCount,
+        stargazers,
+        description,
+        isPrivate,
+        primaryLanguage
+    }, deleteRepo } = props;
 
     const isCheckedAsPrivate = () => {
-        const checked = false;
+        let checked = false;
         if (isPrivate) {
             checked = true;
         }
         return checked;
+    }
+
+    const removeRepository = async () => {
+        const { repo } = props;
+        await deleteRepo(repo);
     }
 
     const Div = styled.div`
@@ -57,12 +73,15 @@ export const RepoItem = (props) => {
                     </strong>
                 </span>
                 <strong>
-                    <i className="material-icons text-blue-900 delete-btn">close</i>
+                    <i
+                        role="button"
+                        onClick={removeRepository}
+                        className="material-icons text-blue-900 delete-btn">close</i>
                 </strong>
             </div>
             <div className="d-flex flex-row align-items-center justify-content-between w-100 pt-2">
                 <div className="d-flex flex-row align-items-center">
-                    <img className="img-fluid img-shape rounded-circle" src={owner.avatarUrl} />
+                    <img className="img-fluid img-shape rounded-circle" src={owner.avatarUrl} alt="" />
                     <div className="d-flex flex-column align-items-center pl-3">
                         <p className="text-small text-left text-capitalize mb-0 w-100 font-weight-bold">
                             {owner.login}
@@ -103,3 +122,5 @@ export const RepoItem = (props) => {
             </div>
         </Div>);
 }
+
+export const RepoItem = connect(null, actions)(SRepoItem);

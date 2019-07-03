@@ -23,11 +23,12 @@ export const initialState = {
     repoForm: { ...initialRepoForm },
     repos: [],
     selectedRepo: {},
+    languageList: [],
 }
 
 export const reducer = (state = initialState, action) => {
     let repos = [];
-    let selectedRepo = {};
+    let languageList = [];
     let repoForm = { ...initialRepoForm };
 
     switch (action.type) {
@@ -57,12 +58,22 @@ export const reducer = (state = initialState, action) => {
                 repos = _.concat(servRepo, state.repos);
             } else {
                 repos = _.remove(state.repos, function (repo) {
-                    return _.eq(repo, servRepo);
+                    return !_.eq(repo, servRepo);
                 });
             }
             return {
                 ...state,
                 repos,
+            }
+        }
+        case types.UPDATE_PRIME_LANG_LIST: {
+            const { payload: { servLang, empty } } = action;
+            if (isNill(empty)) {
+                languageList = [...servLang];
+            }
+            return {
+                ...state,
+                languageList,
             }
         }
         default:
@@ -71,7 +82,7 @@ export const reducer = (state = initialState, action) => {
 }
 
 export const actions = {
-    fetchRepos: payload => dispatch => {
+    fetchRepos: () => dispatch => {
         fetch('http://localhost:3000/data.json')
             .then(res => res.json())
             .then(data => {
@@ -99,6 +110,25 @@ export const actions = {
     },
     deleteRepo: payload => dispatch => {
         dispatch(actions.manageRepo({ servRepo: payload, deleteRepo: true }));
+    },
+    updatePrimeLangs: payload => dispatch => {
+        dispatch({
+            type: types.UPDATE_PRIME_LANG_LIST,
+            payload,
+        });
+    },
+    searchRepo: payload => (dispatch, getState) => {
+        const { repo: { repos } } = getState();
+        const { searchTerm } = payload;
+        var filteredItems = _.filter(repos, function (repo) {
+            return _.lowerCase(repo.name).includes(searchTerm)
+                || _.lowerCase(repo.description).includes(searchTerm)
+                || _.lowerCase(repo.owner.login).includes(searchTerm);
+        });
+        dispatch({
+            type: types.FETCH_REPOS,
+            payload: { servRepos: filteredItems }
+        });
     }
 }
 

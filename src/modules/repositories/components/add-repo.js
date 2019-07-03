@@ -4,32 +4,38 @@ import { connect } from 'react-redux';
 import actions from 'store/rootActions';
 import styled from 'styled-components';
 import { isEmpty, stripValues } from 'transformers';
+import { history } from 'helpers';
 
 import { AddRepoForm } from './add-repo-form';
 
 const SAddRepo = props => {
-    const { repo: { repos, repoForm }, fetchRepos, createRepo } = props;
+    const { repo: { repos, repoForm, languageList }, fetchRepos, createRepo, updatePrimeLangs } = props;
 
     useEffect(() => {
+        let isMounted = true;
         const fetchingRepos = async () => {
             return await fetchRepos();
         }
-        if (isEmpty(repos)) {
+        if (isEmpty(repos) && isMounted) {
             fetchingRepos();
         }
-        return function cleanup() {
-            console.log('clear');
-        }
-    }, [repoForm, fetchRepos, repos]);
+        isEmpty(languageList) && updatePrimeLangs({ servLang: stripValues(repos, 'primaryLanguage') });
 
-    const options = stripValues(repos, 'primaryLanguage');
+        return function cleanup() {
+            isMounted = false;
+        }
+    }, [repoForm, fetchRepos, repos, languageList, updatePrimeLangs]);
+
     const handleSubmit = async (values) => {
         await createRepo(values);
+        history.push({
+            pathname: '/'
+        });
     }
 
     const Div = styled.div`
         .form-container {
-            min-height: 80vh;
+            min-height: 50vh;
             background-color: ${backgroundColor};
             color: ${textColor};
 
@@ -50,7 +56,7 @@ const SAddRepo = props => {
 
     return (
         <Div className="row justify-content-md-center px-3">
-            {repoForm && (<AddRepoForm languages={options} form={repoForm} handleSubmit={handleSubmit} />)}
+            {repoForm && (<AddRepoForm languages={languageList} form={repoForm} handleSubmit={handleSubmit} />)}
         </Div>
     )
 }
