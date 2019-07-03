@@ -1,10 +1,10 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
 import { backgroundColor, textColor } from 'modules/shared/components/theme';
-import { daysAgo } from 'transformers';
+import React from 'react';
 import { rubberBand } from 'react-animations';
 import { connect } from 'react-redux';
 import actions from 'store/rootActions';
+import styled, { keyframes } from 'styled-components';
+import { daysAgo } from 'transformers';
 
 const rubberBandAnimation = keyframes`${rubberBand}`;
 

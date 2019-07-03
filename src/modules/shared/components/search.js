@@ -1,7 +1,7 @@
+import { debounce } from 'lodash';
 import { backgroundColor, textColor } from 'modules/shared/components/theme';
 import React from 'react';
 import styled from 'styled-components';
-import { debounce } from 'lodash';
 
 export const SearchBar = props => {
     const { handleSearch, ...rest } = props;
@@ -39,16 +39,12 @@ export const SearchBar = props => {
     `;
 
     return (
-        <div className="col-12 pb-5 pt-4 justify-content-center">
-            <div className="row justify-content-center">
-                <Div className="col-10 p-3 rounded-pill">
-                    <input
-                        onChange={debouncedEvent(handleChange, 600)}
-                        className="form-control rounded-0"
-                        id="search-bar"
-                        {...rest} />
-                </Div>
-            </div>
-        </div>
+        <Div className="col-10 p-3 rounded-pill">
+            <input
+                onChange={debouncedEvent(handleChange, 600)}
+                className="form-control rounded-0"
+                id="search-bar"
+                {...rest} />
+        </Div>
     );
 }

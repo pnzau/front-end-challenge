@@ -1,11 +1,12 @@
+import { history } from 'helpers';
+import { backgroundColor, SearchBar } from 'modules/shared/components';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import actions from 'store/rootActions';
-import { isEmpty } from 'transformers';
-import { RepoItem } from './repo-item';
 import styled from 'styled-components';
-import { backgroundColor, SearchBar } from 'modules/shared/components';
-import { history } from 'helpers';
+import { isEmpty } from 'transformers';
+
+import { RepoItem } from './repo-item';
 
 const SRepos = (props) => {
     const { repo: { repos }, fetchRepos, searchRepo } = props;
@@ -44,7 +45,14 @@ const SRepos = (props) => {
     `;
 
     return (<Div className="row">
-        <SearchBar placeholder="Search here ..." handleSearch={handleSearch} />
+        <div className="col-12 pb-5 pt-4 justify-content-center">
+            <div className="row justify-content-center align-items-center">
+                <SearchBar placeholder="Search here ..." handleSearch={handleSearch} />
+                <div className="col">
+                    <span className="font-weight-bold">{repos.length} Items found</span>
+                </div>
+            </div>
+        </div>
         <div role='button' onClick={goToAddRepoPage} className="shadow rounded-circle text-gold floating-btn position-fixed">
             <i className="material-icons p-2">
                 add
