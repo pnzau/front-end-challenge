@@ -121,9 +121,9 @@ export const actions = {
         const { repo: { repos } } = getState();
         const { searchTerm } = payload;
         var filteredItems = _.filter(repos, function (repo) {
-            return _.lowerCase(repo.name).includes(searchTerm)
-                || _.lowerCase(repo.description).includes(searchTerm)
-                || _.lowerCase(repo.owner.login).includes(searchTerm);
+            return _.eq(_.lowerCase(repo.name), searchTerm)
+                || _.eq(_.lowerCase(repo.description), searchTerm)
+                || _.eq(_.lowerCase(repo.owner.login), searchTerm);
         });
         dispatch({
             type: types.FETCH_REPOS,

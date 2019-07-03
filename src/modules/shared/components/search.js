@@ -1,19 +1,22 @@
-import React from 'react';
-import _ from 'lodash';
-import styled from 'styled-components';
 import { backgroundColor, textColor } from 'modules/shared/components/theme';
+import React from 'react';
+import styled from 'styled-components';
+import { debounce } from 'lodash';
 
 export const SearchBar = props => {
     const { handleSearch, ...rest } = props;
-    const delayedSearch = () => {
-        _.debounce(handleSearch, 400)
+
+    const debouncedEvent = (...args) => {
+        const debounceEvent = debounce(...args);
+        return e => {
+            e.persist();
+            return debounceEvent(e);
+        }
     }
 
-    const handleChange = (e) => {
-        //This will ensure that the event is not pooled
-        e.persist()
+    const handleChange = e => {
         const { target: { value } } = e;
-        delayedSearch(value);
+        handleSearch(value);
     }
 
     const Div = styled.div`
@@ -40,7 +43,7 @@ export const SearchBar = props => {
             <div className="row justify-content-center">
                 <Div className="col-10 p-3 rounded-pill">
                     <input
-                        onChange={handleChange}
+                        onChange={debouncedEvent(handleChange, 600)}
                         className="form-control rounded-0"
                         id="search-bar"
                         {...rest} />
